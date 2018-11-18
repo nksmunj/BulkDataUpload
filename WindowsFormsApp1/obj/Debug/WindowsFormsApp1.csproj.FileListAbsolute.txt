@@ -8,3 +8,13 @@ F:\TempProjects\Excel_Bulk_Upload\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\Wi
 F:\TempProjects\Excel_Bulk_Upload\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
 F:\TempProjects\Excel_Bulk_Upload\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
 F:\TempProjects\Excel_Bulk_Upload\WindowsFormsApp1\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+F:\Git Projects\DataBulkUpload\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+F:\Git Projects\DataBulkUpload\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+F:\Git Projects\DataBulkUpload\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+F:\Git Projects\DataBulkUpload\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csprojResolveAssemblyReference.cache
+F:\Git Projects\DataBulkUpload\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Form1.resources
+F:\Git Projects\DataBulkUpload\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+F:\Git Projects\DataBulkUpload\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.Cache
+F:\Git Projects\DataBulkUpload\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+F:\Git Projects\DataBulkUpload\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+F:\Git Projects\DataBulkUpload\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb

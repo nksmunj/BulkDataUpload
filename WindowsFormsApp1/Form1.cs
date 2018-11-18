@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Data.OleDb;
+using System.Net.Http;
 
 namespace WindowsFormsApp1
 {
@@ -65,42 +66,43 @@ namespace WindowsFormsApp1
                     con.Open();
                     var sheetNames = con.GetSchema("Tables");
                     string row1 = sheetNames.Rows[0]["TABLE_NAME"].ToString();
-                    //foreach (DataRow row in sheetNames.Rows)
-                    //{
-                    //    var name = row["TABLE_NAME"];
-                    //    string name1 = name.ToString().Replace('"', ' ').Replace("'", string.Empty);
-                    System.Data.DataTable dt = GetDataTable("SELECT * FROM " + "[" + row1 + "]", connString, con, row1);
-                    System.Data.DataTable newdt = RemoveEmptyRowsFromDataTable(dt);
-                    int i = 0;
-                    log.Error("Start Date:" + DateTime.Now + "-" + "File Path:" + path);
-                    Int64 rows = newdt.Rows.Count;
-                    //for (int j = 0; j < newdt.Rows.Count; j++)
-                    //{
-                    //    ed.TestName = newdt.Columns.Contains("Test Name") ? newdt.Rows[j]["Test Name"].ToString() : null;
-                    //    ed.Inventory = newdt.Columns.Contains("Inventory") ? newdt.Rows[j]["Inventory"].ToString() : null;
-                    //    list.Add(ed);
-                    //}
-
-                    foreach (DataRow row in dt.Rows)
+                    foreach (DataRow row in sheetNames.Rows)
                     {
-                        EntityData ed = new EntityData();
-                        ed.TestName = row["Test Name"].ToString();
-                        ed.Inventory = row["Inventory"].ToString();
-                        list.Add(ed);
-                    }
+                        var name = row["TABLE_NAME"];
+                        string name1 = name.ToString().Replace('"', ' ').Replace("'", string.Empty);
+                        System.Data.DataTable dt = GetDataTable("SELECT * FROM " + "[" + row1 + "]", connString, con, row1);
+                        System.Data.DataTable newdt = RemoveEmptyRowsFromDataTable(dt);
+                        int i = 0;
+                        log.Error("Start Date:" + DateTime.Now + "-" + "File Path:" + path);
+                        Int64 rows = newdt.Rows.Count;
+                        //for (int j = 0; j < newdt.Rows.Count; j++)
+                        //{
+                        //    ed.TestName = newdt.Columns.Contains("Test Name") ? newdt.Rows[j]["Test Name"].ToString() : null;
+                        //    ed.Inventory = newdt.Columns.Contains("Inventory") ? newdt.Rows[j]["Inventory"].ToString() : null;
+                        //    list.Add(ed);
+                        //}
 
-                    HttpClient client = new HttpClient();
-                    Uri baseAddress = new Uri("http://localhost:15751/");
-                    client.BaseAddress = baseAddress;
-                    HttpResponseMessage response = client.PostAsJsonAsync("api/MasterTest/MasterTestInventoryRelationBulk", list).Result;
-                    if (response.IsSuccessStatusCode)
-                    {
-                        //MessageBox.Show("Record Imported Successfully");
-                    }
-                    //}
+                        //foreach (DataRow row in dt.Rows)
+                        //{
+                        //    EntityData ed = new EntityData();
+                        //    ed.TestName = row["Test Name"].ToString();
+                        //    ed.Inventory = row["Inventory"].ToString();
+                        //    list.Add(ed);
+                        //}
 
-                    //}
-                    log.Error("End Date:" + DateTime.Now);
+                        //HttpClient client = new HttpClient();
+                        //Uri baseAddress = new Uri("http://localhost:15751/");
+                        //client.BaseAddress = baseAddress;
+                        //HttpResponseMessage response = client.PostAsJsonAsync("api/MasterTest/MasterTestInventoryRelationBulk", list).Result;
+                        //if (response.IsSuccessStatusCode)
+                        //{
+                        //    //MessageBox.Show("Record Imported Successfully");
+                        //}
+                        //}
+
+                        //}
+                        log.Error("End Date:" + DateTime.Now);
+                    }
                 }
             }
             catch (Exception ex)
@@ -108,5 +110,37 @@ namespace WindowsFormsApp1
                 log.Error("Error Message:" + ex.Message);
             }
         }
+
+        public static System.Data.DataTable GetDataTable(string sql, string connectionString, OleDbConnection conn, string name)
+        {
+            System.Data.DataTable dt = null;
+            try
+            {
+                OleDbCommand cmd = new OleDbCommand(sql, conn);
+                OleDbDataReader rdr = cmd.ExecuteReader();
+
+                System.Data.DataTable dtCustomers = new System.Data.DataTable(name);
+                dtCustomers.Load(rdr);
+                dt = dtCustomers;
+                return dt;
+            }
+            catch (Exception ex)
+            {
+                log.Error("Error Message:" + ex.Message);
+                return dt = null;
+            }
+        }
+
+        public static System.Data.DataTable RemoveEmptyRowsFromDataTable(System.Data.DataTable dt)
+        {
+            for (int i = dt.Rows.Count - 1; i >= 0; i--)
+            {
+                if (dt.Rows[i][1] == DBNull.Value || dt.Rows[i][2] == DBNull.Value)
+                    dt.Rows[i].Delete();
+            }
+            dt.AcceptChanges();
+            return dt;
+        }
+
     }
 }
